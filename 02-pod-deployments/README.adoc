@@ -31,3 +31,44 @@ Used to run pods on all or specific k8s nodes with specific features. if k8s nod
 == Exercise: Run a stateless Application Using a Deployment
 
 Check the documentation here https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/ and provide the deployment in our `training` namespace.
+
+== Solution:
+```shell
+# create deployment yaml file
+cat <<EOF >>deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-deployment
+spec:
+  selector:
+    matchLabels:
+      app: greeting
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: greeting
+    spec:
+      containers:
+      - name: greeting-con
+        image: localhost:5003/development/service-greeting:latest
+        ports:
+        - containerPort: 80
+	env:
+	- name: configs
+	  valueFrom:
+		configMapKeyRef:
+
+		  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+
+		  name: special-config
+
+		  # Specify the key associated with the value
+
+		  key: special.how
+EOF
+
+# Create a Deployment based on the YAML file in training namespace
+kubectl apply -f deployment.yaml -n training
+```
