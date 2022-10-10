@@ -143,6 +143,14 @@ Provide this stateless application in the kubernetes which considers the followi
 
 * Provide the 03-custom-application/service/greeting/config/config.yaml in the pod in /config
 ** Take a look at Configmaps https://kubernetes.io/docs/concepts/configuration/configmap/
+
+Solution:
+[source%nowrap,bash]
+----
+  cd 03-custom-application/service/greeting/config
+  kubectl create configmap config --from-file=config.yaml
+----
+  
 * Use the probes rest endpoints
 ** Access to the probe endpoints is only possible from within the k8s cluster
 * Provide the application with multiple replicas
