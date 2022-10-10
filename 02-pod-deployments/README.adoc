@@ -39,34 +39,22 @@ cat <<EOF >>deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: greeting-deployment
+  name: nginx-deployment
 spec:
   selector:
     matchLabels:
-      app: greeting
+      app: nginx
   replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
-        app: greeting
+        app: nginx
     spec:
       containers:
-      - name: greeting-con
-        image: localhost:5003/development/service-greeting:latest
+      - name: nginx
+        image: nginx:1.14.2
         ports:
         - containerPort: 80
-	env:
-	- name: configs
-	  valueFrom:
-		configMapKeyRef:
-
-		  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
-
-		  name: special-config
-
-		  # Specify the key associated with the value
-
-		  key: special.how
 EOF
 
 # Create a Deployment based on the YAML file in training namespace
