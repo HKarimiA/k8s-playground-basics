@@ -159,6 +159,20 @@ Provide this stateless application in the kubernetes which considers the followi
 
 * Provide the application with multiple replicas
 ** Let it dynamically scale based on cpu and / or memory consumption
+
+**Solution:**
+[source%nowrap,bash]
+----
+  # greeting-deployment.yaml
+  
+  # cpu autoscaling
+  kubectl autoscale deployment greeting-deployment --name=greeting-hpa-cpu --cpu-percent=50 --min=1 --max=10
+  
+  # memory autoscaling
+  # greeting-autoscaling-memory.yaml
+----
+
+
 * Make the greeting endpoints available from outside the cluster via http and https using ingress (nginx ingress is already installed)
 ** Take a look at https://kubernetes.io/docs/concepts/services-networking/ingress/
 ** Target endpoints
