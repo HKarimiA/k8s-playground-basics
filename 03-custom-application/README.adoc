@@ -149,8 +149,8 @@ Provide this stateless application in the kubernetes which considers the followi
 ----
   cd 03-custom-application/service/greeting/config
   kubectl create configmap config --from-file=config.yaml
+  # see greeting-pod-simple1.yaml
 ----
-see greeting-deployment-probe1.yaml
   
 * Use the probes rest endpoints
 ** Access to the probe endpoints is only possible from within the k8s cluster
