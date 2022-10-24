@@ -1,0 +1,8 @@
+---
+bases:
+- ../../base
+patchesStrategicMerge:
+- greeting-config.yaml
+- greeting-deployment.yaml
+- greeting-autoscaling-cpu.yaml
+- greeting-autoscaling-memory.yaml

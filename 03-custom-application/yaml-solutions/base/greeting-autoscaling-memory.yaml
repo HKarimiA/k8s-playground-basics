@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v2 
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: greeting-hpa-memory
@@ -8,7 +8,7 @@ spec:
     kind: Deployment 
     name: greeting-deployment
   minReplicas: 1 
-  maxReplicas: 10 
+  maxReplicas: 2
   metrics: 
   - type: Resource
     resource:

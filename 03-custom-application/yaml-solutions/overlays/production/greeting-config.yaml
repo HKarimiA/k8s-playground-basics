@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    service:
+      name: blueprint-greeting-pro
+      rest: 8080
+      health: 8081
+      logLevel: debug
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: default

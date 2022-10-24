@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: greeting-probe-deployment
+  name: greeting-deployment
   labels:
     app: greeting
 spec:
@@ -25,16 +25,23 @@ spec:
         - containerPort: 8080
         readinessProbe:
           httpGet:
-            path: /healthz
-          tcpSocket:
-            port: 8080
+            path: /ready
+            port: 8081
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
-          tcpSocket:
+          httpGet:
+            path: /live
             port: 8081
           initialDelaySeconds: 5
           periodSeconds: 15
+        resources:
+          limits:
+            cpu: 100m
+            memory: "200Mi"
+          requests:
+            cpu: 50m
+            memory: "100Mi"
       volumes:
         - name: config
           configMap:

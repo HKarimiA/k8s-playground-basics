@@ -147,15 +147,15 @@ Provide this stateless application in the kubernetes which considers the followi
 **Solution:**
 [source%nowrap,bash]
 ----
-  cd 03-custom-application/service/greeting/config
-  kubectl create configmap config --from-file=config.yaml
-  # see greeting-pod-simple1.yaml
+  kubectl create configmap config --from-file=service/greeting/config/config.yaml
+  # or 
+  kubectl apply -f yaml-solutions/greeting-config.yaml
 ----
   
 * Use the probes rest endpoints
 ** Access to the probe endpoints is only possible from within the k8s cluster
 
-**Solution:** see greeting-deployment-probe1.yaml
+**Solution:** see yaml-solutions/greeting-deployment.yaml
 
 * Provide the application with multiple replicas
 ** Let it dynamically scale based on cpu and / or memory consumption
@@ -164,14 +164,15 @@ Provide this stateless application in the kubernetes which considers the followi
 [source%nowrap,bash]
 ----
   # greeting-deployment.yaml
-  kubectl apply -f greeting-deployment.yaml
+  kubectl apply -f yaml-solutions/greeting-deployment.yaml
   
   # cpu autoscaling
   kubectl autoscale deployment greeting-deployment --name=greeting-hpa-cpu --cpu-percent=50 --min=1 --max=10
+  # or 
+  kubectl apply -f yaml-solutions/greeting-autoscaling-cpu.yaml
   
   # memory autoscaling
-  # greeting-autoscaling-memory.yaml
-  kubectl apply -f greeting-autoscaling-memory.yaml
+  kubectl apply -f yaml-solutions/greeting-autoscaling-memory.yaml
 ----
 
 
@@ -180,10 +181,30 @@ Provide this stateless application in the kubernetes which considers the followi
 ** Target endpoints
 *** localhost:48080/greeting/v1/greeting/
 *** localhost:48443/greeting/v1/greeting/
+
+**Solution:**
+[source%nowrap,bash]
+----
+  # greeting-service.yaml
+  kubectl apply -f yaml-solutions/greeting-service.yaml
+  
+  # greeting-ingress.yaml
+  kubectl apply -f yaml-solutions/greeting-ingress.yaml
+  
+----
 * Provide a setup which could handle multiple environments / stages (dev / test / prod).
 ** Consider using kustomize or helm
 
-
+**Solution:**
+[source%nowrap,bash]
+----
+  # Deploy your base configuration to Kubernetes (for example as development environment)
+  kubectl apply -k yaml-solutions/base/
+  
+  # Deploy your base configuration to Kubernetes with some changes (for example as production environment)
+  kubectl apply -k yaml-solutions/overlays/production/
+  
+----
 
 
 
